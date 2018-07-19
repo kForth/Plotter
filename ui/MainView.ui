@@ -32,7 +32,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Plotter</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 12pt &quot;OpenSansEmoji&quot;;</string>

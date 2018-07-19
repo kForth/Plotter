@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Data Sources</string>
   </property>
   <widget class="QPushButton" name="done_button">
    <property name="geometry">
