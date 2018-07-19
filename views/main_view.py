@@ -4,8 +4,6 @@ from PyQt5.QtCore import Qt, QRect, QLine, QFile, QIODevice, QSize
 from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QPixmap, QCursor, QFontDatabase
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QWidget, QApplication, QLabel, QColorDialog, QPushButton, QRadioButton
 
-import numpy as np
-
 from collections import OrderedDict
 
 from views.add_file import AddFileWindow
@@ -359,8 +357,7 @@ class MainWindow(QMainWindow):
                 line_pen.setDashPattern(line['pattern'])
             qp.setPen(line_pen)
             qp.drawLine(140, 10 + i * y_spacing + 10, 190, 10 + i * y_spacing + 10)
-            # qp.drawRect(QRect(55, 10 + i * y_spacing, 50, 20))
-            pass
+
         qp.end()
         self.legend.setPixmap(pixmap)
 
