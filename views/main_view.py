@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QWidget, QApplication, QLa
 
 from collections import OrderedDict
 
+from py_ui.MainView import Ui_PlotterMainWindow
 from views.add_file import AddFileWindow
 from views.chart import ChartWidget
 from views.style_picker import StyleSelectDialog
@@ -16,7 +17,10 @@ from views.data_source_list_view import DataSourceListDialog
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('ui/MainView.ui', self)
+        self.setupUi = Ui_PlotterMainWindow.setupUi
+        self.retranslateUi = lambda e: Ui_PlotterMainWindow.retranslateUi(self, e)
+        self.setupUi(self, self)
+        # uic.loadUi('ui/MainView.ui', self)
         self.fontDB = QFontDatabase()
         self.fontDB.addApplicationFont("OpenSansEmoji.ttf")
 

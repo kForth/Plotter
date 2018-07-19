@@ -4,12 +4,16 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor, QPen, QPixmap
 from PyQt5.QtWidgets import QDialog
 
+from py_ui.DataSourceListView import Ui_DataSourcesDialog
 from views.add_file import AddFileWindow
 
 class DataSourceListDialog(QDialog):
     def __init__(self, datasets, add_func, del_func):
         super().__init__()
-        uic.loadUi('ui/DataSourceListView.ui', self)
+        self.setupUi = Ui_DataSourcesDialog.setupUi
+        self.retranslateUi = lambda e: Ui_DataSourcesDialog.retranslateUi(self, e)
+        self.setupUi(self, self)
+        # uic.loadUi('ui/DataSourceListView.ui', self)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.datasets = datasets
         self.add_func = add_func

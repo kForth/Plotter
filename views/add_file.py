@@ -4,10 +4,16 @@ from PyQt5.QtCore import Qt, QRect, QLine
 from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QPixmap, QCursor
 from PyQt5.QtWidgets import QFileDialog, QDialog, QWidget, QApplication, QLabel, QTableWidgetItem
 
+from py_ui.AddFileView import Ui_AddFileDialog
+
 class AddFileWindow(QDialog):
     def __init__(self, data_callback, cancel_add_callback, filepath="", delimiter=",", header_row=False, skip_n_rows=0):
         super().__init__()
-        uic.loadUi('ui/AddFileView.ui', self)
+        self.setupUi = Ui_AddFileDialog.setupUi
+        self.retranslateUi = lambda e: Ui_AddFileDialog.retranslateUi(self, e)
+        self.setupUi(self, self)
+        # uic.loadUi('ui/AddFileView.ui', self)
+
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
         self.data_callback = data_callback
         self.cancel_add_callback = cancel_add_callback

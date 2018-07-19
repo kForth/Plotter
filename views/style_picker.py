@@ -4,12 +4,17 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor, QPen, QPixmap
 from PyQt5.QtWidgets import QDialog
 
+from py_ui.StyleSelectDialog import Ui_SelectStyleDialog
+
 class StyleSelectDialog(QDialog):
     styleSelected = pyqtSignal(tuple)
 
     def __init__(self):
         super().__init__()
-        uic.loadUi('ui/StyleSelectDialog.ui', self)
+        self.setupUi = Ui_SelectStyleDialog.setupUi
+        self.retranslateUi = lambda e: Ui_SelectStyleDialog.retranslateUi(self, e)
+        self.setupUi(self, self)
+        # uic.loadUi('ui/StyleSelectDialog.ui', self)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
 
         self.done_button.clicked.connect(self.handle_done_button)

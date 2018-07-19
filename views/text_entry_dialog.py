@@ -4,6 +4,8 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor, QPen, QPixmap
 from PyQt5.QtWidgets import QDialog
 
+from py_ui.TextEntryDialog import Ui_EnterTextDialog
+
 class TextEntryDialog(QDialog):
     textChanged = pyqtSignal(str)
     textSelected = pyqtSignal(str)
@@ -11,7 +13,10 @@ class TextEntryDialog(QDialog):
 
     def __init__(self, label_text, text="", window_title="Enter Text"):
         super().__init__()
-        uic.loadUi('ui/TextEntryDialog.ui', self)
+        self.setupUi = Ui_EnterTextDialog.setupUi
+        self.retranslateUi = lambda e: Ui_EnterTextDialog.retranslateUi(self, e)
+        self.setupUi(self, self)
+        # uic.loadUi('ui/TextEntryDialog.ui', self)
         self.setWindowFlags(Qt.WindowStaysOnTopHint)
 
         self.setWindowTitle(window_title)
