@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>OpenSansEmoji</family>
+    <pointsize>12</pointsize>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">font: 12pt &quot;OpenSansEmoji&quot;;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="tab_widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::RightToLeft</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-bottom: 1px solid #ddd;</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="add_page_button">
+         <property name="minimumSize">
+          <size>
+           <width>35</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>25</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+	border: 1px solid #ccc;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 5px 10px;
+	background: #eee;
+}</string>
+         </property>
+         <property name="text">
+          <string>+</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="verticalWidget_2" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="verticalWidget_2" native="true">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="legend_widget" native="true">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <widget class="QWidget" name="widget_4" native="true">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>200</width>
+                 <height>290</height>
+                </rect>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <widget class="QWidget" name="line_settings_widget" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>200</width>
+                  <height>301</height>
+                 </rect>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <widget class="QLabel" name="label_7">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>235</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Display:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_8">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>185</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Line Width:</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="display_line_checkbox">
+                 <property name="geometry">
+                  <rect>
+                   <x>170</x>
+                   <y>235</y>
+                   <width>20</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="line_colour_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>160</y>
+                   <width>50</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 1px solid #ddd;
+background: #eee;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="line_pattern_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>140</x>
+                   <y>160</y>
+                   <width>50</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border: 1px solid #ddd;
+background: #eee;</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+                <widget class="QSlider" name="line_width_slider">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>185</y>
+                   <width>110</width>
+                   <height>22</height>
+                  </rect>
+                 </property>
+                 <property name="minimum">
+                  <number>10</number>
+                 </property>
+                 <property name="maximum">
+                  <number>100</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="value">
+                  <number>15</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>35</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>85</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>X Key:</string>
+                 </property>
+                </widget>
+                <widget class="QComboBox" name="x_key_combo_box">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>85</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>60</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Dataset:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_5">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>110</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Y Key:</string>
+                 </property>
+                </widget>
+                <widget class="QComboBox" name="y_key_combo_box">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>110</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_6">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>160</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Line:</string>
+                 </property>
+                </widget>
+                <widget class="QLineEdit" name="name_input">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>35</y>
+                   <width>110</width>
+                   <height>21</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QComboBox" name="dataset_combo_box">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>60</y>
+                   <width>110</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_9">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>210</y>
+                   <width>70</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Opacity</string>
+                 </property>
+                </widget>
+                <widget class="QSlider" name="line_opacity_slider">
+                 <property name="geometry">
+                  <rect>
+                   <x>80</x>
+                   <y>205</y>
+                   <width>110</width>
+                   <height>22</height>
+                  </rect>
+                 </property>
+                 <property name="minimum">
+                  <number>0</number>
+                 </property>
+                 <property name="maximum">
+                  <number>255</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>5</number>
+                 </property>
+                 <property name="value">
+                  <number>250</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="remove_line_button">
+                 <property name="geometry">
+                  <rect>
+                   <x>145</x>
+                   <y>0</y>
+                   <width>26</width>
+                   <height>26</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>-</string>
+                 </property>
+                </widget>
+                <widget class="QComboBox" name="line_combo_box_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>140</width>
+                   <height>26</height>
+                  </rect>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="add_line_button">
+                 <property name="geometry">
+                  <rect>
+                   <x>175</x>
+                   <y>0</y>
+                   <width>25</width>
+                   <height>25</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>+</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_10">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>135</y>
+                   <width>100</width>
+                   <height>20</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Sort By X Key:</string>
+                 </property>
+                </widget>
+                <widget class="QCheckBox" name="sort_by_x_checkbox">
+                 <property name="geometry">
+                  <rect>
+                   <x>170</x>
+                   <y>135</y>
+                   <width>20</width>
+                   <height>18</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+                <zorder>label_7</zorder>
+                <zorder>label_8</zorder>
+                <zorder>display_line_checkbox</zorder>
+                <zorder>line_colour_label</zorder>
+                <zorder>line_pattern_label</zorder>
+                <zorder>line_width_slider</zorder>
+                <zorder>label_2</zorder>
+                <zorder>label_4</zorder>
+                <zorder>x_key_combo_box</zorder>
+                <zorder>label_3</zorder>
+                <zorder>label_5</zorder>
+                <zorder>y_key_combo_box</zorder>
+                <zorder>label_6</zorder>
+                <zorder>name_input</zorder>
+                <zorder>dataset_combo_box</zorder>
+                <zorder>label_9</zorder>
+                <zorder>line_opacity_slider</zorder>
+                <zorder>line_combo_box_3</zorder>
+                <zorder>remove_line_button</zorder>
+                <zorder>add_line_button</zorder>
+                <zorder>label_10</zorder>
+                <zorder>sort_by_x_checkbox</zorder>
+               </widget>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_3" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #ccc;
+background: #eee;</string>
+              </property>
+              <widget class="QLabel" name="line_count_label">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>200</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>4 Lines</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="edit_lines_button">
+               <property name="geometry">
+                <rect>
+                 <x>180</x>
+                 <y>0</y>
+                 <width>20</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>OpenSansEmoji</family>
+                 <pointsize>12</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>📝</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="add_line_button_2">
+               <property name="geometry">
+                <rect>
+                 <x>160</x>
+                 <y>0</y>
+                 <width>20</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>20</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: 1px solid #ccc;
+background: #eee;</string>
+              </property>
+              <widget class="QPushButton" name="add_dataset_button_3">
+               <property name="geometry">
+                <rect>
+                 <x>160</x>
+                 <y>0</y>
+                 <width>20</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>+</string>
+               </property>
+              </widget>
+              <widget class="QLabel" name="dataset_count_label">
+               <property name="geometry">
+                <rect>
+                 <x>0</x>
+                 <y>0</y>
+                 <width>200</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="text">
+                <string>4 Datasets</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="edit_datasets_button">
+               <property name="geometry">
+                <rect>
+                 <x>180</x>
+                 <y>0</y>
+                 <width>20</width>
+                 <height>20</height>
+                </rect>
+               </property>
+               <property name="font">
+                <font>
+                 <family>OpenSansEmoji</family>
+                 <pointsize>12</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>📝</string>
+               </property>
+              </widget>
+              <zorder>dataset_count_label</zorder>
+              <zorder>edit_datasets_button</zorder>
+              <zorder>add_dataset_button_3</zorder>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="chart_label">
+          <property name="styleSheet">
+           <string notr="true">background: #fff;</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">border-top: 1px solid #ddd;</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <property name="spacing">
+            <number>5</number>
+           </property>
+           <property name="leftMargin">
+            <number>5</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="home_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Home (h)</string>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 1px solid #ccc; border-radius: 2px;</string>
+             </property>
+             <property name="text">
+              <string>🏠</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="zoom_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Zoom (z)</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 1px solid #ccc; border-radius: 2px;</string>
+             </property>
+             <property name="text">
+              <string>🔍</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="styleSheet">
+              <string notr="true">border:none</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="screenshot_button">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>30</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Screenshot (s)</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: 1px solid #ccc; border-radius: 2px;</string>
+             </property>
+             <property name="text">
+              <string>📷</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuData">
+    <property name="title">
+     <string>Data</string>
+    </property>
+    <addaction name="add_file_action"/>
+   </widget>
+   <widget class="QMenu" name="menuPage">
+    <property name="title">
+     <string>Pages</string>
+    </property>
+    <addaction name="add_page_action"/>
+    <addaction name="separator"/>
+    <addaction name="edit_page_name_action"/>
+    <addaction name="delete_current_page_action"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuData"/>
+   <addaction name="menuPage"/>
+  </widget>
+  <action name="actionOpen_CSV">
+   <property name="text">
+    <string>Open CSV</string>
+   </property>
+  </action>
+  <action name="add_file_action">
+   <property name="text">
+    <string>Add File</string>
+   </property>
+  </action>
+  <action name="add_page_action">
+   <property name="text">
+    <string>Add page</string>
+   </property>
+  </action>
+  <action name="delete_current_page_action">
+   <property name="text">
+    <string>Delete Current Page</string>
+   </property>
+  </action>
+  <action name="edit_page_name_action">
+   <property name="text">
+    <string>Edit Page Name</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
