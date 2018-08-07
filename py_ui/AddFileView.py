@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui/AddFileView.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.11.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -138,10 +138,15 @@ class Ui_AddFileDialog(object):
         self.verticalLayout_2.addWidget(self.widget_2)
         self.horizontalWidget_2 = QtWidgets.QWidget(self.verticalWidget)
         self.horizontalWidget_2.setObjectName("horizontalWidget_2")
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.horizontalWidget_2)
-        self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout_5.setSpacing(15)
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
+        self.custom_delimiter_input = QtWidgets.QLineEdit(self.horizontalWidget_2)
+        self.custom_delimiter_input.setGeometry(QtCore.QRect(75, 2, 100, 21))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.custom_delimiter_input.sizePolicy().hasHeightForWidth())
+        self.custom_delimiter_input.setSizePolicy(sizePolicy)
+        self.custom_delimiter_input.setMaximumSize(QtCore.QSize(100, 16777215))
+        self.custom_delimiter_input.setObjectName("custom_delimiter_input")
         self.verticalLayout_2.addWidget(self.horizontalWidget_2)
         self.horizontalLayout.addWidget(self.verticalWidget)
         self.verticalLayout.addWidget(self.horizontalWidget)

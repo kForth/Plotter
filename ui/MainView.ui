@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>400</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>800</width>
-    <height>400</height>
+    <height>450</height>
    </size>
   </property>
   <property name="font">
@@ -51,7 +51,16 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="margin">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
      <number>0</number>
     </property>
     <item>
@@ -163,7 +172,16 @@
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
          </property>
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -175,7 +193,16 @@
             <property name="spacing">
              <number>0</number>
             </property>
-            <property name="margin">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
              <number>0</number>
             </property>
             <item>
@@ -183,366 +210,549 @@
               <property name="styleSheet">
                <string notr="true"/>
               </property>
-              <widget class="QWidget" name="widget_4" native="true">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>200</width>
-                 <height>290</height>
-                </rect>
+              <layout class="QGridLayout" name="gridLayout">
+               <property name="leftMargin">
+                <number>0</number>
                </property>
-               <property name="styleSheet">
-                <string notr="true"/>
+               <property name="topMargin">
+                <number>0</number>
                </property>
-               <widget class="QWidget" name="line_settings_widget" native="true">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>200</width>
-                  <height>301</height>
-                 </rect>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <widget class="QLabel" name="label_7">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>235</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Display:</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_8">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>185</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Line Width:</string>
-                 </property>
-                </widget>
-                <widget class="QCheckBox" name="display_line_checkbox">
-                 <property name="geometry">
-                  <rect>
-                   <x>170</x>
-                   <y>235</y>
-                   <width>20</width>
-                   <height>18</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="line_colour_label">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>160</y>
-                   <width>50</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item row="0" column="0">
+                <widget class="QWidget" name="widget_4" native="true">
                  <property name="styleSheet">
-                  <string notr="true">border: 1px solid #ddd;
+                  <string notr="true"/>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_2">
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="QWidget" name="line_settings_widget" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <widget class="QLabel" name="label_7">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>160</y>
+                       <width>90</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Draw Line:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_8">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>200</y>
+                       <width>60</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Width:</string>
+                     </property>
+                    </widget>
+                    <widget class="QCheckBox" name="display_line_checkbox">
+                     <property name="geometry">
+                      <rect>
+                       <x>170</x>
+                       <y>160</y>
+                       <width>20</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="line_colour_label">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>180</y>
+                       <width>50</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: 1px solid #ddd;
 background: #eee;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="line_pattern_label">
-                 <property name="geometry">
-                  <rect>
-                   <x>140</x>
-                   <y>160</y>
-                   <width>50</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">border: 1px solid #ddd;
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="line_pattern_label">
+                     <property name="geometry">
+                      <rect>
+                       <x>140</x>
+                       <y>180</y>
+                       <width>50</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: 1px solid #ddd;
 background: #eee;</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                    <widget class="QSlider" name="line_width_slider">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>200</y>
+                       <width>110</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="minimum">
+                      <number>10</number>
+                     </property>
+                     <property name="maximum">
+                      <number>100</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>5</number>
+                     </property>
+                     <property name="value">
+                      <number>15</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_2">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>30</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Name:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_4">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>80</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>X Key:</string>
+                     </property>
+                    </widget>
+                    <widget class="QComboBox" name="x_key_combo_box">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>80</y>
+                       <width>110</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_3">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>55</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Dataset:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_5">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>105</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Y Key:</string>
+                     </property>
+                    </widget>
+                    <widget class="QComboBox" name="y_key_combo_box">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>105</y>
+                       <width>110</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_6">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>180</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Style:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLineEdit" name="name_input">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>30</y>
+                       <width>110</width>
+                       <height>21</height>
+                      </rect>
+                     </property>
+                    </widget>
+                    <widget class="QComboBox" name="dataset_combo_box">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>55</y>
+                       <width>110</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_9">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>220</y>
+                       <width>60</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Opacity:</string>
+                     </property>
+                    </widget>
+                    <widget class="QSlider" name="line_opacity_slider">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>220</y>
+                       <width>110</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>5</number>
+                     </property>
+                     <property name="value">
+                      <number>250</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                    <widget class="QPushButton" name="remove_line_button">
+                     <property name="geometry">
+                      <rect>
+                       <x>145</x>
+                       <y>0</y>
+                       <width>26</width>
+                       <height>26</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>-</string>
+                     </property>
+                    </widget>
+                    <widget class="QComboBox" name="line_combo_box_3">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>140</width>
+                       <height>26</height>
+                      </rect>
+                     </property>
+                    </widget>
+                    <widget class="QPushButton" name="add_line_button">
+                     <property name="geometry">
+                      <rect>
+                       <x>175</x>
+                       <y>0</y>
+                       <width>25</width>
+                       <height>25</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>+</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_10">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>130</y>
+                       <width>100</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Sort By X Key:</string>
+                     </property>
+                    </widget>
+                    <widget class="QCheckBox" name="sort_by_x_checkbox">
+                     <property name="geometry">
+                      <rect>
+                       <x>170</x>
+                       <y>130</y>
+                       <width>20</width>
+                       <height>18</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_11">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>270</y>
+                       <width>70</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Style:</string>
+                     </property>
+                    </widget>
+                    <widget class="QCheckBox" name="display_point_checkbox">
+                     <property name="geometry">
+                      <rect>
+                       <x>170</x>
+                       <y>250</y>
+                       <width>20</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="checked">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                    <widget class="QSlider" name="point_opacity_slider">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>310</y>
+                       <width>110</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>5</number>
+                     </property>
+                     <property name="value">
+                      <number>250</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_12">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>290</y>
+                       <width>60</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Size:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_13">
+                     <property name="geometry">
+                      <rect>
+                       <x>20</x>
+                       <y>310</y>
+                       <width>60</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Opacity:</string>
+                     </property>
+                    </widget>
+                    <widget class="QSlider" name="point_size_slider">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>290</y>
+                       <width>110</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="minimum">
+                      <number>10</number>
+                     </property>
+                     <property name="maximum">
+                      <number>100</number>
+                     </property>
+                     <property name="singleStep">
+                      <number>5</number>
+                     </property>
+                     <property name="value">
+                      <number>15</number>
+                     </property>
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="point_colour_label">
+                     <property name="geometry">
+                      <rect>
+                       <x>80</x>
+                       <y>270</y>
+                       <width>50</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: 1px solid #ddd;
+background: #eee;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="label_14">
+                     <property name="geometry">
+                      <rect>
+                       <x>10</x>
+                       <y>250</y>
+                       <width>90</width>
+                       <height>22</height>
+                      </rect>
+                     </property>
+                     <property name="text">
+                      <string>Draw Points:</string>
+                     </property>
+                    </widget>
+                    <widget class="QLabel" name="point_shape_label">
+                     <property name="geometry">
+                      <rect>
+                       <x>140</x>
+                       <y>270</y>
+                       <width>50</width>
+                       <height>20</height>
+                      </rect>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">border: 1px solid #ddd;
+background: #eee;</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                    <zorder>label_7</zorder>
+                    <zorder>label_8</zorder>
+                    <zorder>display_line_checkbox</zorder>
+                    <zorder>line_colour_label</zorder>
+                    <zorder>line_pattern_label</zorder>
+                    <zorder>line_width_slider</zorder>
+                    <zorder>label_2</zorder>
+                    <zorder>label_4</zorder>
+                    <zorder>x_key_combo_box</zorder>
+                    <zorder>label_3</zorder>
+                    <zorder>label_5</zorder>
+                    <zorder>y_key_combo_box</zorder>
+                    <zorder>label_6</zorder>
+                    <zorder>name_input</zorder>
+                    <zorder>dataset_combo_box</zorder>
+                    <zorder>label_9</zorder>
+                    <zorder>line_opacity_slider</zorder>
+                    <zorder>line_combo_box_3</zorder>
+                    <zorder>remove_line_button</zorder>
+                    <zorder>add_line_button</zorder>
+                    <zorder>label_10</zorder>
+                    <zorder>sort_by_x_checkbox</zorder>
+                    <zorder>label_11</zorder>
+                    <zorder>display_point_checkbox</zorder>
+                    <zorder>point_opacity_slider</zorder>
+                    <zorder>label_12</zorder>
+                    <zorder>label_13</zorder>
+                    <zorder>point_size_slider</zorder>
+                    <zorder>point_colour_label</zorder>
+                    <zorder>label_14</zorder>
+                    <zorder>point_shape_label</zorder>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
-                <widget class="QSlider" name="line_width_slider">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>185</y>
-                   <width>110</width>
-                   <height>22</height>
-                  </rect>
-                 </property>
-                 <property name="minimum">
-                  <number>10</number>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>5</number>
-                 </property>
-                 <property name="value">
-                  <number>15</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_2">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>35</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Name:</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_4">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>85</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>X Key:</string>
-                 </property>
-                </widget>
-                <widget class="QComboBox" name="x_key_combo_box">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>85</y>
-                   <width>110</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_3">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>60</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Dataset:</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_5">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>110</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Y Key:</string>
-                 </property>
-                </widget>
-                <widget class="QComboBox" name="y_key_combo_box">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>110</y>
-                   <width>110</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_6">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>160</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Line:</string>
-                 </property>
-                </widget>
-                <widget class="QLineEdit" name="name_input">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>35</y>
-                   <width>110</width>
-                   <height>21</height>
-                  </rect>
-                 </property>
-                </widget>
-                <widget class="QComboBox" name="dataset_combo_box">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>60</y>
-                   <width>110</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_9">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>210</y>
-                   <width>70</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Opacity</string>
-                 </property>
-                </widget>
-                <widget class="QSlider" name="line_opacity_slider">
-                 <property name="geometry">
-                  <rect>
-                   <x>80</x>
-                   <y>205</y>
-                   <width>110</width>
-                   <height>22</height>
-                  </rect>
-                 </property>
-                 <property name="minimum">
-                  <number>0</number>
-                 </property>
-                 <property name="maximum">
-                  <number>255</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>5</number>
-                 </property>
-                 <property name="value">
-                  <number>250</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-                <widget class="QPushButton" name="remove_line_button">
-                 <property name="geometry">
-                  <rect>
-                   <x>145</x>
-                   <y>0</y>
-                   <width>26</width>
-                   <height>26</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>-</string>
-                 </property>
-                </widget>
-                <widget class="QComboBox" name="line_combo_box_3">
-                 <property name="geometry">
-                  <rect>
-                   <x>0</x>
-                   <y>0</y>
-                   <width>140</width>
-                   <height>26</height>
-                  </rect>
-                 </property>
-                </widget>
-                <widget class="QPushButton" name="add_line_button">
-                 <property name="geometry">
-                  <rect>
-                   <x>175</x>
-                   <y>0</y>
-                   <width>25</width>
-                   <height>25</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>+</string>
-                 </property>
-                </widget>
-                <widget class="QLabel" name="label_10">
-                 <property name="geometry">
-                  <rect>
-                   <x>10</x>
-                   <y>135</y>
-                   <width>100</width>
-                   <height>20</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string>Sort By X Key:</string>
-                 </property>
-                </widget>
-                <widget class="QCheckBox" name="sort_by_x_checkbox">
-                 <property name="geometry">
-                  <rect>
-                   <x>170</x>
-                   <y>135</y>
-                   <width>20</width>
-                   <height>18</height>
-                  </rect>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-                <zorder>label_7</zorder>
-                <zorder>label_8</zorder>
-                <zorder>display_line_checkbox</zorder>
-                <zorder>line_colour_label</zorder>
-                <zorder>line_pattern_label</zorder>
-                <zorder>line_width_slider</zorder>
-                <zorder>label_2</zorder>
-                <zorder>label_4</zorder>
-                <zorder>x_key_combo_box</zorder>
-                <zorder>label_3</zorder>
-                <zorder>label_5</zorder>
-                <zorder>y_key_combo_box</zorder>
-                <zorder>label_6</zorder>
-                <zorder>name_input</zorder>
-                <zorder>dataset_combo_box</zorder>
-                <zorder>label_9</zorder>
-                <zorder>line_opacity_slider</zorder>
-                <zorder>line_combo_box_3</zorder>
-                <zorder>remove_line_button</zorder>
-                <zorder>add_line_button</zorder>
-                <zorder>label_10</zorder>
-                <zorder>sort_by_x_checkbox</zorder>
-               </widget>
-              </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
@@ -864,9 +1074,18 @@ background: #eee;</string>
     <addaction name="edit_page_name_action"/>
     <addaction name="delete_current_page_action"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionDocumentation"/>
+    <addaction name="actionWebsite"/>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuData"/>
    <addaction name="menuPage"/>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionOpen_CSV">
    <property name="text">
@@ -891,6 +1110,21 @@ background: #eee;</string>
   <action name="edit_page_name_action">
    <property name="text">
     <string>Edit Page Name</string>
+   </property>
+  </action>
+  <action name="actionDocumentation">
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+  </action>
+  <action name="actionWebsite">
+   <property name="text">
+    <string>Website</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>

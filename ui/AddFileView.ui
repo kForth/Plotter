@@ -342,23 +342,28 @@
          </item>
          <item>
           <widget class="QWidget" name="horizontalWidget_2" native="true">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
-            <property name="spacing">
-             <number>15</number>
+           <widget class="QLineEdit" name="custom_delimiter_input">
+            <property name="geometry">
+             <rect>
+              <x>75</x>
+              <y>2</y>
+              <width>100</width>
+              <height>21</height>
+             </rect>
             </property>
-            <property name="leftMargin">
-             <number>0</number>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="topMargin">
-             <number>0</number>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-           </layout>
+           </widget>
           </widget>
          </item>
         </layout>

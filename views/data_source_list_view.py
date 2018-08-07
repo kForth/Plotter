@@ -27,44 +27,33 @@ class DataSourceListDialog(QDialog):
         self.last_dataset = None
 
         self.data_source_list.clear()
-        for fp in self.datasets:
-            self.data_source_list.addItem(fp)
+        for dataset in self.datasets:
+            self.data_source_list.addItem(dataset.filepath)
         self.show()
 
     def add_data_source(self, event):
         self.add_file_window = AddFileWindow(self.add_source, lambda: 0)
 
-    def add_source(self, filepath, data, delimiter, header_row, skip_n_rows):
-        self.data_source_list.addItem(filepath)
-        self.add_func(filepath, data, delimiter, header_row, skip_n_rows)
+    def add_source(self, dataset):
+        self.data_source_list.addItem(dataset.filepath)
+        self.add_func(dataset)
 
     def delete_data_source(self, event):
         if self.data_source_list.currentItem() is not None:
-            self.del_func(self.datasets[self.data_source_list.currentItem().text()])
+            self.del_func(self.datasets[self.data_source_list.currentIndex()])
             self.data_source_list.clear()
-            for fp in self.datasets:
-                self.data_source_list.addItem(fp)
+            for dataset in self.datasets:
+                self.data_source_list.addItem(dataset.filepath)
 
     def edit_data_source(self, event):
         if self.data_source_list.currentItem() is not None:
-            fp = self.data_source_list.currentItem().text()
-            self.data_source_to_edit = self.datasets[fp]
-            self.data_source_edit_window = AddFileWindow(self.update_data, lambda: 0, fp, self.data_source_to_edit['delimiter'], self.data_source_to_edit['header_row'], self.data_source_to_edit['skip_n_rows'])
-            pass
+            self.data_source_edit_window = AddFileWindow(lambda: 0, lambda: 0, fp, self.datasets[self.data_source_list.currentIndex()])
 
-    def update_data(self, filepath, data, delimiter, header_row, skip_n_rows):
-        data_source = {
-            'filepath': filepath,
-            'data': data,
-            'delimiter': delimiter,
-            'header_row': header_row
-        }
-        if filepath != self.data_source_to_edit['filepath']:
-            del self.datasets[self.data_source_to_edit['filepath']]
-            self.data_source_to_edit = self.datasets[filepath] = {}    
-        self.data_source_to_edit['filepath'] = filepath
-        self.data_source_to_edit['data'] = data
-        self.data_source_to_edit['delimiter'] = delimiter
-        self.data_source_to_edit['header_row'] = header_row
-        self.data_source_to_edit['skip_n_rows'] = skip_n_rows
+    # def update_data(self, data_source):
+        # if filepath != self.data_source_to_edit.filepath:
+        # self.data_source_to_edit.filepath = filepath
+        # self.data_source_to_edit.data = data
+        # self.data_source_to_edit.delimiter = delimiter
+        # self.data_source_to_edit.header_row = header_row
+        # self.data_source_to_edit.skip_n_rows = skip_n_rows
 

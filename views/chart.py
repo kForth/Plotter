@@ -13,13 +13,12 @@ class MouseMode(Enum):
     zoom = 1
 
 class ChartWidget:
-    def __init__(self, parent, home_button, zoom_button):
+    def __init__(self, parent, home_button, zoom_button, repaint_callback):
         self.parent = parent
         self.home_button = home_button
         self.zoom_button = zoom_button
+        self.repaint_callback = repaint_callback
 
-        # self.parent_paintEvent = self.parent.paintEvent
-        # self.parent.paintEvent = self.paintEvent
         self.parent.wheelEvent = self.wheelEvent
 
         self.parent_resizeEvent = self.parent.resizeEvent
@@ -73,7 +72,7 @@ class ChartWidget:
             self.y_range = max_y - min_y
 
             self.x_scale = (self.parent.width() - self.data_margin * 2) / (2.5 ** math.ceil(math.log(self.x_range)))
-            self.y_scale = (self.parent.height() - self.data_margin * 2) / (2.5 ** math.ceil(math.log(self.y_range)))
+            self.y_scale = self.x_scale # (self.parent.height() - self.data_margin * 2) / (2.5 ** math.ceil(math.log(self.y_range)))
 
             self.axis_margin[0] = math.ceil(math.log(max(max_x, abs(min_x)))) + 3 * 14
             # self.axis_margin[1] = math.ceil(math.log(max(max_y, abs(min_y)))) + 3 * 14
@@ -101,7 +100,8 @@ class ChartWidget:
         self.zoom([cx, cy], self.parent.width() / w, self.parent.height() / h, [self.parent.width()/2, self.parent.height()/2])
     
     def repaint(self):
-        self.parent.repaint()
+        self.repaint_callback()
+        # self.parent.repaint()
 
     def wheelEvent(self, event):
         pos = event.pos()
@@ -149,7 +149,6 @@ class ChartWidget:
         self.repaint()
 
     def resizeEvent(self, event):
-        # self.fit_data()
         size = self.parent.size()
         self.origin_offset[0] = self.origin_offset[0] * size.width() / self.last_size.width()
         self.origin_offset[1] = self.origin_offset[1] * size.height() / self.last_size.height()
@@ -173,12 +172,29 @@ class ChartWidget:
         for i in range(1, len(points)):
             x, y = self.calc_gui_point(points[i])
             x2, y2 = self.calc_gui_point(points[i-1])
-            qp.drawLine(x, y, x2, y2)
+            if self.is_segment_visible([x, y], [x2, y2]):
+                qp.drawLine(x, y, x2, y2)
+
+    # https://bryceboe.com/2006/10/23/line-segment-intersection-algorithm/
+    def ccw(self, A, B, C):
+        return (C[1]-A[1]) * (B[0]-A[0]) > (B[1]-A[1]) * (C[0]-A[0])
+
+    def intersect(self, A, B, C, D):
+        return self.ccw(A,C,D) != self.ccw(B,C,D) and self.ccw(A,B,C) != self.ccw(A,B,D)
+
+    def is_segment_visible(self, pt, pt2):
+        return ((0 <= pt[0] <= self.parent.width()) and (0 <= pt[1] <= self.parent.height())) or \
+                ((0 <= pt2[0] <= self.parent.width()) and (0 <= pt2[1] <= self.parent.height())) or \
+                self.intersect(pt, pt2, [0, 0], [self.parent.width(), 0]) or \
+                self.intersect(pt, pt2, [0, 0], [0, self.parent.height()]) or \
+                self.intersect(pt, pt2, [0, self.parent.height()], [self.parent.width(), self.parent.height()]) or \
+                self.intersect(pt, pt2, [self.parent.width(), 0], [self.parent.width(), self.parent.height()])
 
     def paint_chart(self, qp, lines):
+        print("painting chart", time())
         self.last_lines = lines
         self.last_data = []
-        qp.setRenderHints(QPainter.SmoothPixmapTransform | QPainter.Antialiasing | QPainter.HighQualityAntialiasing)
+        qp.setRenderHints(QPainter.SmoothPixmapTransform | QPainter.Antialiasing)
 
         track_cursor = False
         pos = self.parent.mapFromGlobal(QCursor.pos())
@@ -226,20 +242,21 @@ class ChartWidget:
 
         #  Draw Data Lines
         for line in lines:
-            data = [(i if line['x_key'] == 0 else e[line['x_key']-1], i if line['y_key'] == 0 else e[line['y_key']-1]) for i, e in enumerate(line['dataset']['data'][1:])]
-            if line['sort_by_x']:
+            data = []
+            for i, e in enumerate(line.dataset.data[(1 if line.dataset.header_row else 0):]):
+                data.append((i if line.x_key == 0 else e[line.x_key-1], i if line.y_key == 0 else e[line.y_key-1]))
+            if line.sort_by_x:
                 data = sorted(data, key=lambda e: e[0])
-            pen = QPen()
-            pen.setStyle(line['style'])
-            pen.setCapStyle(Qt.RoundCap);
-            if line['pattern'] and line['style'] is Qt.CustomDashLine:
-                pen.setDashPattern(line['pattern'])
-            pen.setColor(line['colour'])
-            pen.setWidth(line['line_width'])
-            qp.setPen(pen)
-            self.paint_line(qp, data)
-
-
+            if line.display_line:
+                pen = QPen()
+                pen.setStyle(line.line_style)
+                pen.setCapStyle(Qt.RoundCap);
+                if line.line_pattern and line.line_style is Qt.CustomDashLine:
+                    pen.setDashPattern(line.line_pattern)
+                pen.setColor(line.line_colour)
+                pen.setWidth(line.line_width)
+                qp.setPen(pen)
+                self.paint_line(qp, data)
 
         if track_cursor:
             qp.setPen(self.axis_pen)

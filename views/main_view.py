@@ -12,6 +12,8 @@ from views.chart import ChartWidget
 from views.style_picker import StyleSelectDialog
 from views.text_entry_dialog import TextEntryDialog
 from views.data_source_list_view import DataSourceListDialog
+from dataset import Dataset
+from line import Line
 
 
 class MainWindow(QMainWindow):
@@ -24,7 +26,7 @@ class MainWindow(QMainWindow):
         self.fontDB = QFontDatabase()
         self.fontDB.addApplicationFont("OpenSansEmoji.ttf")
 
-        self.chart = ChartWidget(self.chart_label, self.home_button, self.zoom_button)
+        self.chart = ChartWidget(self.chart_label, self.home_button, self.zoom_button, self.update_chart)
         self.legend = QLabel(self.legend_widget)
         self.screenshot_button.clicked.connect(self.handle_screenshot_button)
 
@@ -38,7 +40,7 @@ class MainWindow(QMainWindow):
         self.delete_current_page_action.triggered.connect(self.delete_page)
 
         # self.add_page_button.setPosition(
-        self.datasets = OrderedDict()
+        self.datasets = []
         self.pages = []
         self.page = {}
         self.add_page()
@@ -57,16 +59,27 @@ class MainWindow(QMainWindow):
         self.display_line_checkbox.clicked.connect(self.update_edited_line)
         self.line_width_slider.valueChanged.connect(self.update_edited_line)
         self.line_opacity_slider.valueChanged.connect(self.update_edited_line)
+        self.display_point_checkbox.clicked.connect(self.update_edited_line)
+        self.point_size_slider.valueChanged.connect(self.update_edited_line)
+        self.point_opacity_slider.valueChanged.connect(self.update_edited_line)
 
-        self.line_colour_label.mousePressEvent = self.open_colour_dialog
+        self.line_colour_label.mousePressEvent = lambda _: self.open_colour_dialog(self.update_line_colour)
         self.line_pattern_label.mousePressEvent = self.open_style_dialog
+
+        self.point_colour_label.mousePressEvent = lambda _: self.open_colour_dialog(self.update_point_colour)
+        # self.point_shape_label.mousePressEvent = self.open_shape_dialog
 
         self.line_settings_widget.setVisible(False)
         self.line_to_edit = None
         self.remove_line_button.clicked.connect(self.handle_remove_line_button)
 
 
+        self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
+        self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
+
         self.show()
+
+        self.legend.setFixedSize(self.legend_widget.size())
         self.chart.fit_data()
 
     def open_edit_dataset(self, event):
@@ -138,14 +151,14 @@ class MainWindow(QMainWindow):
             self.page['button'].setChecked(True)
             
             self.line_combo_box.clear()
-            [self.line_combo_box.addItem(l['name']) for l in self.page['lines']]
-            self.repaint()
+            [self.line_combo_box.addItem(l.name) for l in self.page['lines']]
+
             if not self.page['lines'] and self.datasets:
                 self.handle_add_line_button()
             else:
                 self.line_combo_box.setCurrentIndex(0)
 
-            self.repaint()
+            self.update_chart()
 
     def toggle_edit_lines(self, event):
         if self.line_to_edit is None and self.datasets:
@@ -173,24 +186,26 @@ class MainWindow(QMainWindow):
         self.style_dialog.styleSelected.connect(self.update_line_style)
         self.style_dialog.open()
 
-    def open_colour_dialog(self, event):
+    def open_colour_dialog(self, target):
         self.colour_dialog = QColorDialog()
-        self.colour_dialog.colorSelected.connect(self.update_line_colour)
+        self.colour_dialog.colorSelected.connect(target)
         self.colour_dialog.open()
 
     def set_line_to_edit_from_combo_box(self):
         if self.page['lines']:
             self.line_to_edit = self.page['lines'][self.line_combo_box.currentIndex()]
-            self.name_input.setText(self.line_to_edit['name'])
-            self.dataset_combo_box.setCurrentIndex(list(self.datasets.keys()).index(self.line_to_edit['dataset']['filepath']))
-            self.x_key_combo_box.setCurrentIndex(self.line_to_edit['x_key'])
-            self.y_key_combo_box.setCurrentIndex(self.line_to_edit['y_key'])
-            self.sort_by_x_checkbox.setChecked(self.line_to_edit['sort_by_x'])
-            self.display_line_checkbox.setChecked(self.line_to_edit['display'])
-            self.dataset_combo_box.setCurrentIndex(list(self.datasets.keys()).index(self.line_to_edit['dataset']['filepath']))
-            self.line_width_slider.setValue(int(self.line_to_edit['line_width'] * 10))
-            self.draw_line_label_colour(self.line_to_edit['colour'])
-            self.draw_line_label_pattern(self.line_to_edit['style'])
+            self.name_input.setText(self.line_to_edit.name)
+            self.dataset_combo_box.setCurrentIndex(self.datasets.index(self.line_to_edit.dataset))
+            self.x_key_combo_box.setCurrentIndex(self.line_to_edit.x_key)
+            self.y_key_combo_box.setCurrentIndex(self.line_to_edit.y_key)
+            self.sort_by_x_checkbox.setChecked(self.line_to_edit.sort_by_x)
+            self.display_line_checkbox.setChecked(self.line_to_edit.display_line)
+            self.dataset_combo_box.setCurrentIndex(self.datasets.index(self.line_to_edit.dataset))
+            self.line_width_slider.setValue(int(self.line_to_edit.line_width * 10))
+            self.draw_line_label_colour(self.line_to_edit.line_colour)
+            self.draw_line_label_pattern(self.line_to_edit.line_style)
+            self.draw_point_label_colour(self.line_to_edit.point_colour)
+            # self.draw_point_label_style(self.line_to_edit.point_style)
 
             if self.datasets:
                 self.line_settings_widget.setVisible(True)
@@ -202,16 +217,11 @@ class MainWindow(QMainWindow):
     def open_data_file(self):
         self.add_file_window = AddFileWindow(self.add_data_source, lambda: 0)
 
-    def add_data_source(self, filepath, data, delimiter, header_row, skip_n_rows):
-        self.datasets[filepath] = {
-            'filepath': filepath,
-            'data': data,
-            'delimiter': delimiter,
-            'header_row': header_row,
-            'skip_n_rows': skip_n_rows
-        }
-        self.dataset_combo_box.addItem(filepath.split("/")[-1])
+    def add_data_source(self, dataset):
+        self.datasets.append(dataset)
+        self.dataset_combo_box.addItem(dataset.filepath.split("/")[-1])
 
+        self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
         self.update_data_set()
         if not self.page['lines']:
             self.handle_add_line_button()
@@ -224,34 +234,26 @@ class MainWindow(QMainWindow):
                         self.handle_remove_line_button(None)
                     else:
                         page['lines'].remove(line)
-        del self.datasets[data_source['filepath']]
+        self.datasets.remove(data_source)
         self.dataset_combo_box.clear()
-        [self.dataset_combo_box.addItem(d) for d in self.datasets]
+        [self.dataset_combo_box.addItem(d.filepath) for d in self.datasets]
+        self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
         self.update_data_set()
-        self.repaint()
+        self.update_chart()
 
 
     def handle_add_line_button(self):
         if self.datasets:
             default_name = 'Line 1'
-            while default_name in [e['name'] for e in self.page['lines']]:
+            while default_name in [e.name for e in self.page['lines']]:
                 default_name = 'Line ' + str(int(default_name.split(' ')[-1]) + 1)
-            self.page['lines'].append({
-                'name': default_name,
-                'dataset': self.datasets[list(self.datasets.keys())[0]],
-                'colour': QColor(50, 50, 250, 255),
-                'style': Qt.SolidLine,
-                'pattern': [],
-                'display': True,
-                'line_width': 1.5,
-                'x_key': 0,
-                'y_key': 1,
-                'sort_by_x': False
-            })
-            self.line_combo_box.addItem(self.page['lines'][-1]['name'])
+            line = Line(default_name, self.datasets[0])
+            self.page['lines'].append(line)
+            self.line_combo_box.addItem(line.name)
             self.line_combo_box.setCurrentIndex(len(self.page['lines'])-1)
             self.set_line_to_edit_from_combo_box()
 
+            self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
             self.update_data_set()
             self.chart.paint_lines(self.page['lines'])
             self.chart.fit_data()
@@ -264,14 +266,21 @@ class MainWindow(QMainWindow):
             self.line_settings_widget.setVisible(False)
             self.legend.setVisible(True)
         else:
-            [self.line_combo_box.addItem(e['name']) for e in self.page['lines']]
+            [self.line_combo_box.addItem(e.name) for e in self.page['lines']]
             self.line_combo_box.setCurrentIndex(0)
-        self.repaint()
+
+        self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
+        self.update_chart()
 
     def draw_line_label_colour(self, colour):
         pixmap = QPixmap(self.line_colour_label.size())
         pixmap.fill(colour)
         self.line_colour_label.setPixmap(pixmap)
+
+    def draw_point_label_colour(self, colour):
+        pixmap = QPixmap(self.point_colour_label.size())
+        pixmap.fill(colour)
+        self.point_colour_label.setPixmap(pixmap)
 
     def draw_line_label_pattern(self, style, pattern=[]):
         pixmap = QPixmap(self.line_pattern_label.size())
@@ -291,37 +300,44 @@ class MainWindow(QMainWindow):
 
     def update_edited_line(self):
         if self.line_to_edit:
-            self.line_to_edit['name'] = self.name_input.text()
-            self.line_combo_box.setItemText(self.line_combo_box.currentIndex(), self.line_to_edit['name'])
-            self.line_to_edit['line_width'] = self.line_width_slider.value() / 10
-            self.line_to_edit['display'] = self.display_line_checkbox.isChecked()
-            self.line_to_edit['sort_by_x'] = self.sort_by_x_checkbox.isChecked()
-            self.line_to_edit['x_key'] = self.x_key_combo_box.currentIndex()
-            self.line_to_edit['y_key'] = self.y_key_combo_box.currentIndex()
-            self.line_to_edit['colour'].setAlpha(self.line_opacity_slider.value())
-            self.repaint()
+            self.line_to_edit.name = self.name_input.text()
+            self.line_combo_box.setItemText(self.line_combo_box.currentIndex(), self.line_to_edit.name)
+            self.line_to_edit.sort_by_x = self.sort_by_x_checkbox.isChecked()
+            self.line_to_edit.x_key = self.x_key_combo_box.currentIndex()
+            self.line_to_edit.y_key = self.y_key_combo_box.currentIndex()
+            self.line_to_edit.display_line = self.display_line_checkbox.isChecked()
+            self.line_to_edit.line_width = self.line_width_slider.value() / 10
+            self.line_to_edit.line_colour.setAlpha(self.line_opacity_slider.value())
+            self.update_chart()
 
     def update_line_colour(self, colour):
         if self.line_to_edit:
-            self.line_to_edit['colour'] = colour
-            self.line_to_edit['colour'].setAlpha(self.line_opacity_slider.value())
+            self.line_to_edit.line_colour = colour
+            self.line_to_edit.line_colour.setAlpha(self.line_opacity_slider.value())
             self.draw_line_label_colour(colour)
-            self.repaint()
+            self.update_chart()
+
+    def update_point_colour(self, colour):
+        if self.line_to_edit:
+            self.line_to_edit.point_colour = colour
+            self.line_to_edit.point_colour.setAlpha(self.point_opacity_slider.value())
+            self.draw_point_label_colour(colour)
+            self.update_chart()
 
     def update_line_style(self, result):
         if self.line_to_edit:
-            self.line_to_edit['style'] = result[0]
-            self.line_to_edit['pattern'] = result[1]
+            self.line_to_edit.line_style = result[0]
+            self.line_to_edit.line_pattern = result[1]
             self.draw_line_label_pattern(*result)
-            self.repaint()
+            self.update_chart()
 
     def update_data_set(self):
         if self.line_to_edit is not None:
-            dataset = self.line_to_edit['dataset']
-            if dataset['header_row']:
-                keys = dataset['data'][0]
+            dataset = self.line_to_edit.dataset
+            if dataset.header_row:
+                keys = dataset.data[0]
             else:
-                keys = map(str, range(len(dataset['data'][0])))
+                keys = map(str, range(len(dataset.data[0])))
             self.x_key_combo_box.clear()
             self.y_key_combo_box.clear()
             self.x_key_combo_box.addItem('Row Number')
@@ -331,16 +347,20 @@ class MainWindow(QMainWindow):
                 self.y_key_combo_box.addItem(key)
 
             if self.line_to_edit is not None:
-                self.line_to_edit['dataset'] = dataset
-                self.line_to_edit['x_key'] = 0
-                self.line_to_edit['y_key'] = 1
+                self.line_to_edit.dataset = dataset
+                self.line_to_edit.x_key = 0
+                self.line_to_edit.y_key = 1
                 self.x_key_combo_box.setCurrentIndex(0)
                 self.y_key_combo_box.setCurrentIndex(1)
+            self.update_chart()
 
     def paintEvent(self, event):
-        self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
-        self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
-        self.legend.setFixedSize(self.legend_widget.size())
+        # self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
+        # self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
+        # self.update_chart()
+        pass
+
+    def update_chart(self):
         pixmap = QPixmap(self.legend.size())
         pixmap.fill(QColor(0, 0, 0, 0))
         qp = QPainter()
@@ -352,13 +372,13 @@ class MainWindow(QMainWindow):
         for i in range(len(self.page['lines'])):
             line = self.page['lines'][i]
             qp.setPen(legend_pen)
-            qp.drawText(QRect(10, 12 + i * y_spacing, 120, 20), Qt.AlignLeft, line['name']);
+            qp.drawText(QRect(10, 12 + i * y_spacing, 120, 20), Qt.AlignLeft, line.name);
             line_pen = QPen()
             line_pen.setWidth(4)
-            line_pen.setColor(line['colour'])
-            line_pen.setStyle(line['style'])
-            if line['pattern'] and line['style'] is Qt.CustomDashLine:
-                line_pen.setDashPattern(line['pattern'])
+            line_pen.setColor(line.line_colour)
+            line_pen.setStyle(line.line_style)
+            if line.line_pattern and line.line_style is Qt.CustomDashLine:
+                line_pen.setDashPattern(line.line_pattern)
             qp.setPen(line_pen)
             qp.drawLine(140, 10 + i * y_spacing + 10, 190, 10 + i * y_spacing + 10)
 
@@ -366,5 +386,5 @@ class MainWindow(QMainWindow):
         self.legend.setPixmap(pixmap)
 
         if self.page['lines'] and self.datasets:
-            self.chart.paint_lines([e for e in self.page['lines'] if e['display']])
+            self.chart.paint_lines(self.page['lines'])
             
