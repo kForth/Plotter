@@ -3,8 +3,26 @@ from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QPixmap, QCursor, QLinear
 from PyQt5.QtGui import QColor
 import numpy as np
 
+from enum import Enum
+
+class PointShape(Enum):
+	CIRCLE = 0
+	SQUARE = 1
+	TRIANGLE = 2
+	PLUS = 3
+	X = 4
+	RING = 5
+
+	@staticmethod
+	def from_val(val):
+		for e in list(PointShape):
+			if val == e.value:
+				return e
+		else:
+			return PointShape.CIRCLE
+
 class Line:
-	def __init__(self, name, dataset, line_colour=QColor(50, 50, 250), display_line=True, line_style=Qt.SolidLine, line_pattern=[], line_width=1.5, point_colour=QColor(0, 0, 255), point_shape=0, display_point=False, point_size=3, sort_by_x=False, x_key=0, y_key=1):
+	def __init__(self, name, dataset, line_colour=QColor(50, 50, 250), display_line=True, line_style=Qt.SolidLine, line_pattern=[], line_width=1.5, point_colour=QColor(0, 0, 255), point_shape=PointShape.CIRCLE, display_points=False, point_size=3, sort_by_x=False, x_key=0, y_key=1):
 		self.name = name
 		self.dataset = dataset
 		self.line_colour = line_colour
@@ -14,7 +32,7 @@ class Line:
 		self.line_width = line_width
 		self.point_colour = point_colour
 		self.point_shape = point_shape
-		self.display_point = display_point
+		self.display_points = display_points
 		self.point_size = point_size
 		self.x_key = x_key
 		self.y_key = y_key
@@ -58,10 +76,11 @@ class Line:
 			self.update_pixmap(size, convert_to_gui_point)
 		return self._pixmap
 
-	def set_pixmap_to_update(self):
-		self._should_update_pixmap = True
+	def set_pixmap_to_update(self, should_update=True):
+		self._should_update_pixmap = should_update
 
 	def update_pixmap(self, size, convert_to_gui_point):
+		print('updating pixmap')
 		pixmap = QPixmap(size)
 		pixmap.fill(QColor(255, 255, 255, 0))
 		qp = QPainter()
@@ -73,6 +92,7 @@ class Line:
 			line_points = np.dstack(convert_to_gui_point([np.array(x_data), np.array(y_data)]))[0]
 			if self.sort_by_x:
 				line_points = line_points[line_points[:,0].argsort()]
+			qpoints = [QPoint(e[0], e[1]) for e in line_points]
 
 			if self.display_line and len(line_points) > 0:
 				pen = QPen()
@@ -83,10 +103,31 @@ class Line:
 				pen.setColor(self.line_colour)
 				pen.setWidth(self.line_width)
 				qp.setPen(pen)
-				qp.drawPolyline(*[QPoint(e[0], e[1]) for e in line_points])  # if self.is_point_visible(e)])
+				qp.drawPolyline(*qpoints)  # if self.is_point_visible(e)])
 
-			if self.display_point:
-				pass
+			if self.display_points:
+				pen = QPen()
+				pen.setColor(self.point_colour)
+
+				if self.point_shape is PointShape.CIRCLE:
+					pen.setWidth(self.point_size / 10)
+					pen.setCapStyle(Qt.RoundCap)
+					draw_func = lambda painter, point: painter.drawPoint(point)
+				elif self.point_shape is PointShape.SQUARE:
+					pen.setWidth(self.point_size / 10)
+					pen.setCapStyle(Qt.SquareCap)
+					draw_func = lambda painter, point: painter.drawPoint(point)
+				elif self.point_shape is PointShape.RING:
+					pen.setWidth(self.point_size / 40)
+					draw_func = lambda painter, point: painter.drawEllipse(point, self.point_size / 20, self.point_size / 20)
+				else:
+					draw_func = print
+
+				qp.setPen(pen)
+				for pnt in qpoints:
+					draw_func(qp, pnt)
+
 		qp.end()
 		self._pixmap = pixmap
 		return self._pixmap
+

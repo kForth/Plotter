@@ -272,7 +272,7 @@ class ChartWidget:
         qpainter.end()
         return tracker_pixmap
 
-    @profilefunc
+    # @profilefunc
     def get_lines_pixmap(self, lines):
         pixmap = QPixmap(self.parent.size())
         pixmap.fill(QColor(255, 255, 255, 0))
@@ -298,7 +298,7 @@ class ChartWidget:
             qp.drawPixmap(QPoint(*self.quick_drag_offset), self.last_lines_pixmap)
         else:
             # if update_lines or not self.last_lines_pixmap:
-            self.last_lines_pixmap = self.draw_lines_pixmap(lines)
+            self.last_lines_pixmap = self.get_lines_pixmap(lines)
             qp.drawPixmap(QPoint(0, 0), self.last_lines_pixmap)
 
         if update_axis or not self.last_axis_pixmap:

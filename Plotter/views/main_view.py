@@ -13,7 +13,7 @@ from views.style_picker import StyleSelectDialog
 from views.text_entry_dialog import TextEntryDialog
 from views.data_source_list_view import DataSourceListDialog
 from dataset import Dataset
-from line import Line
+from line import Line, PointShape
 
 from time import time
 
@@ -54,27 +54,28 @@ class MainWindow(QMainWindow):
 
         self.line_combo_box.currentIndexChanged.connect(self.set_line_to_edit_from_combo_box)
         self.dataset_combo_box.currentIndexChanged.connect(self.update_data_set)
-        self.name_input.textChanged.connect(self.update_edited_line)
-        self.sort_by_x_checkbox.clicked.connect(self.update_edited_line)
-        self.x_key_combo_box.currentIndexChanged.connect(self.update_edited_line)
-        self.y_key_combo_box.currentIndexChanged.connect(self.update_edited_line)
-        self.display_line_checkbox.clicked.connect(self.update_edited_line)
-        self.line_width_slider.valueChanged.connect(self.update_edited_line)
-        self.line_opacity_slider.valueChanged.connect(self.update_edited_line)
-        self.display_point_checkbox.clicked.connect(self.update_edited_line)
-        self.point_size_slider.valueChanged.connect(self.update_edited_line)
-        self.point_opacity_slider.valueChanged.connect(self.update_edited_line)
+        self.name_input.textChanged.connect(self.update_edited_line_data)
+        self.sort_by_x_checkbox.clicked.connect(self.update_edited_line_data)
+        self.x_key_combo_box.currentIndexChanged.connect(self.update_edited_line_data)
+        self.y_key_combo_box.currentIndexChanged.connect(self.update_edited_line_data)
+        self.display_line_checkbox.clicked.connect(self.update_edited_line_pixmap)
+        self.line_width_slider.valueChanged.connect(self.update_edited_line_pixmap)
+        self.line_opacity_slider.valueChanged.connect(self.update_edited_line_pixmap)
+        self.display_point_checkbox.clicked.connect(self.update_edited_line_pixmap)
+        self.point_size_slider.valueChanged.connect(self.update_edited_line_pixmap)
+        self.point_opacity_slider.valueChanged.connect(self.update_edited_line_pixmap)
+        self.point_shape_combobox.currentIndexChanged.connect(self.update_edited_line_pixmap)
+        for e in list(PointShape):
+            self.point_shape_combobox.addItem(e.name.title())
+        self.point_shape_combobox.setCurrentIndex(0)
 
         self.line_colour_label.mousePressEvent = lambda _: self.open_colour_dialog(self.update_line_colour)
         self.line_pattern_label.mousePressEvent = self.open_style_dialog
-
         self.point_colour_label.mousePressEvent = lambda _: self.open_colour_dialog(self.update_point_colour)
-        # self.point_shape_label.mousePressEvent = self.open_shape_dialog
 
         self.line_settings_widget.setVisible(False)
         self.line_to_edit = None
         self.remove_line_button.clicked.connect(self.handle_remove_line_button)
-
 
         self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
         self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
@@ -207,7 +208,7 @@ class MainWindow(QMainWindow):
             self.draw_line_label_colour(self.line_to_edit.line_colour)
             self.draw_line_label_pattern(self.line_to_edit.line_style)
             self.draw_point_label_colour(self.line_to_edit.point_colour)
-            # self.draw_point_label_style(self.line_to_edit.point_style)
+            self.point_shape_combobox.setCurrentIndex(self.line_to_edit.point_shape.value)
 
             if self.datasets:
                 self.line_settings_widget.setVisible(True)
@@ -278,11 +279,13 @@ class MainWindow(QMainWindow):
         pixmap = QPixmap(self.line_colour_label.size())
         pixmap.fill(colour)
         self.line_colour_label.setPixmap(pixmap)
+        self.line_to_edit.set_pixmap_to_update()
 
     def draw_point_label_colour(self, colour):
         pixmap = QPixmap(self.point_colour_label.size())
         pixmap.fill(colour)
         self.point_colour_label.setPixmap(pixmap)
+        self.line_to_edit.set_pixmap_to_update()
 
     def draw_line_label_pattern(self, style, pattern=[]):
         pixmap = QPixmap(self.line_pattern_label.size())
@@ -299,18 +302,30 @@ class MainWindow(QMainWindow):
         qp.drawLine(0, pixmap.height()/2, pixmap.width(), pixmap.height()/2)
         qp.end()
         self.line_pattern_label.setPixmap(pixmap)
+        self.line_to_edit.set_pixmap_to_update()
 
-    def update_edited_line(self):
+    def update_edited_line_data(self):
         if self.line_to_edit:
             self.line_to_edit.name = self.name_input.text()
             self.line_combo_box.setItemText(self.line_combo_box.currentIndex(), self.line_to_edit.name)
             self.line_to_edit.sort_by_x = self.sort_by_x_checkbox.isChecked()
             self.line_to_edit.x_key = self.x_key_combo_box.currentIndex()
             self.line_to_edit.y_key = self.y_key_combo_box.currentIndex()
+            self.line_to_edit.set_data_to_update()
+            self.update_edited_line_pixmap()
+            self.update_chart(False)
+
+    def update_edited_line_pixmap(self):
+        if self.line_to_edit:
+            self.line_to_edit.name = self.name_input.text()
             self.line_to_edit.display_line = self.display_line_checkbox.isChecked()
             self.line_to_edit.line_width = self.line_width_slider.value() / 10
             self.line_to_edit.line_colour.setAlpha(self.line_opacity_slider.value())
-            self.line_to_edit.set_all_to_update()
+            self.line_to_edit.display_points = self.display_point_checkbox.isChecked()
+            self.line_to_edit.point_size = self.point_size_slider.value()
+            self.line_to_edit.point_colour.setAlpha(self.point_opacity_slider.value())
+            self.line_to_edit.point_shape = PointShape.from_val(self.point_shape_combobox.currentIndex())
+            self.line_to_edit.set_pixmap_to_update()
             self.update_chart(False)
 
     def update_line_colour(self, colour):
