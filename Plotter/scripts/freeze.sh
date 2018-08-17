@@ -1,3 +1,4 @@
+cd 'Plotter'
 echo "Clearing dist"
 rm -r dist/*
 echo "Freezing with PyInstaller"
