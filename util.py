@@ -1,3 +1,6 @@
+import time
+import cProfile
+
 def create_distinct_colours(num_colours):
     for i in range(num_colours):
         hue = i / (num_colours)
@@ -41,9 +44,29 @@ def hsl_to_rgb(h, s, l):
 def fmod(num, mod):
     if mod > num or mod == 0 or num == 0:
         return num
-    num_sign = num / abs(num)
+    num_sign = 1 if num >= 0 else -1
     num = abs(num)
     mod = abs(mod)
     while num >= mod:
         num -= mod
     return num * num_sign
+
+def timefunc(f):
+    def f_timer(*args, **kwargs):
+        start = time.time()
+        result = f(*args, **kwargs)
+        print('{} took {}ms'.format(f.__name__, (time.time() - start) * 1000))
+        return result
+    return f_timer
+
+def profilefunc(func):
+    def profiled_func(*args, **kwargs):
+        profile = cProfile.Profile()
+        try:
+            profile.enable()
+            result = func(*args, **kwargs)
+            profile.disable()
+            return result
+        finally:
+            profile.print_stats(sort='time')
+    return profiled_func

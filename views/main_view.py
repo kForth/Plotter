@@ -15,6 +15,8 @@ from views.data_source_list_view import DataSourceListDialog
 from dataset import Dataset
 from line import Line
 
+from time import time
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -239,7 +241,7 @@ class MainWindow(QMainWindow):
         [self.dataset_combo_box.addItem(d.filepath) for d in self.datasets]
         self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
         self.update_data_set()
-        self.update_chart()
+        self.update_chart(False)
 
 
     def handle_add_line_button(self):
@@ -255,7 +257,7 @@ class MainWindow(QMainWindow):
 
             self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
             self.update_data_set()
-            self.chart.paint_lines(self.page['lines'])
+            self.chart.paint_lines(self.page['lines'], update_axis=False)
             self.chart.fit_data()
 
     def handle_remove_line_button(self, event):
@@ -270,7 +272,7 @@ class MainWindow(QMainWindow):
             self.line_combo_box.setCurrentIndex(0)
 
         self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
-        self.update_chart()
+        self.update_chart(False)
 
     def draw_line_label_colour(self, colour):
         pixmap = QPixmap(self.line_colour_label.size())
@@ -308,32 +310,36 @@ class MainWindow(QMainWindow):
             self.line_to_edit.display_line = self.display_line_checkbox.isChecked()
             self.line_to_edit.line_width = self.line_width_slider.value() / 10
             self.line_to_edit.line_colour.setAlpha(self.line_opacity_slider.value())
-            self.update_chart()
+            self.line_to_edit.set_all_to_update()
+            self.update_chart(False)
 
     def update_line_colour(self, colour):
         if self.line_to_edit:
             self.line_to_edit.line_colour = colour
             self.line_to_edit.line_colour.setAlpha(self.line_opacity_slider.value())
             self.draw_line_label_colour(colour)
-            self.update_chart()
+            self.update_chart(False)
 
     def update_point_colour(self, colour):
         if self.line_to_edit:
             self.line_to_edit.point_colour = colour
             self.line_to_edit.point_colour.setAlpha(self.point_opacity_slider.value())
+            self.line_to_edit.set_all_to_update()
             self.draw_point_label_colour(colour)
-            self.update_chart()
+            self.update_chart(False)
 
     def update_line_style(self, result):
         if self.line_to_edit:
             self.line_to_edit.line_style = result[0]
             self.line_to_edit.line_pattern = result[1]
+            self.line_to_edit.set_all_to_update()
             self.draw_line_label_pattern(*result)
-            self.update_chart()
+            self.update_chart(False)
 
     def update_data_set(self):
         if self.line_to_edit is not None:
-            dataset = self.line_to_edit.dataset
+            dataset = self.datasets[self.dataset_combo_box.currentIndex()]
+            # dataset = self.line_to_edit.dataset
             if dataset.header_row:
                 keys = dataset.data[0]
             else:
@@ -352,15 +358,17 @@ class MainWindow(QMainWindow):
                 self.line_to_edit.y_key = 1
                 self.x_key_combo_box.setCurrentIndex(0)
                 self.y_key_combo_box.setCurrentIndex(1)
-            self.update_chart()
+
+            self.line_to_edit.dataset = dataset
+            self.line_to_edit.x_key = self.x_key_combo_box.currentIndex()
+            self.line_to_edit.y_key = self.y_key_combo_box.currentIndex()
+            self.line_to_edit.set_all_to_update()
+            self.update_chart(False)
 
     def paintEvent(self, event):
-        # self.dataset_count_label.setText('{} Dataset{}'.format(len(self.datasets), "s" if len(self.datasets) != 1 else ""))
-        # self.line_count_label.setText('{} Line{}'.format(len(self.page['lines']), "s" if len(self.page['lines']) != 1 else ""))
-        # self.update_chart()
         pass
 
-    def update_chart(self):
+    def update_chart(self, update_axis=True, update_lines=True):
         pixmap = QPixmap(self.legend.size())
         pixmap.fill(QColor(0, 0, 0, 0))
         qp = QPainter()
@@ -381,10 +389,9 @@ class MainWindow(QMainWindow):
                 line_pen.setDashPattern(line.line_pattern)
             qp.setPen(line_pen)
             qp.drawLine(140, 10 + i * y_spacing + 10, 190, 10 + i * y_spacing + 10)
-
         qp.end()
         self.legend.setPixmap(pixmap)
 
         if self.page['lines'] and self.datasets:
-            self.chart.paint_lines(self.page['lines'])
+            self.chart.paint_lines(self.page['lines'], update_lines, update_axis)
             

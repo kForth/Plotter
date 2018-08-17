@@ -69,7 +69,7 @@ class AddFileWindow(QDialog):
                 self.filename = QFileDialog.getOpenFileName(None, 'Select File', '', '*.csv')[0]
             self.file_name_input.setText(self.filename)
             self.raw_text = open(self.filename).read().strip()
-            self.text_preview_label.setText(self.raw_text)
+            self.text_preview_label.setText(self.raw_text[:1500])
             self.update_table()
             # self.repaint()
         except Exception as ex:
@@ -84,7 +84,6 @@ class AddFileWindow(QDialog):
                 headers = data_lines[0]
                 data_lines = data_lines[1:]
             data_lines = data_lines[self.skip_rows_input.value():]
-            print(data_lines)
 
             num_cols = max([len(e) for e in data_lines])
             self.data_preview_table.setRowCount(len(data_lines))
@@ -103,21 +102,22 @@ class AddFileWindow(QDialog):
                 self.data_callback(dataset)
             self.close()
 
-    def get_data(self):
+    def get_data(self, sample=True):
         delimiter = self.delimiters[self.delimiter_combo_box.currentIndex()][0]
+        text = self.raw_text[:1500 if sample else -1]
         if self.delimiter_combo_box.currentIndex() < 5:
-            data_lines = [e.split(delimiter) for e in self.raw_text.split("\n")]
+            data_lines = [e.split(delimiter) for e in text.split("\n")]
         else:
             delimiter = self.delimiters[self.delimiter_combo_box.currentIndex()][1]
             if delimiter == 'Any White Space':
-                data_lines = [re.split("\s+", e) for e in self.raw_text.split("\n")]
+                data_lines = [re.split("\s+", e) for e in text.split("\n")]
             elif delimiter == 'Any Non-Numeric Character':
-                data_lines = [re.split("[^0-9.]+", e) for e in self.raw_text.split("\n")]
+                data_lines = [re.split("[^0-9.]+", e) for e in text.split("\n")]
             elif delimiter == 'Custom':
-                data_lines = [e for e  in self.raw_text.split("\n")]
+                data_lines = [e for e  in text.split("\n")]
                 if self.custom_delimiter_input.text():
                     try:
-                        data_lines = [re.split(self.custom_delimiter_input.text(), e) for e in self.raw_text.split("\n")]
+                        data_lines = [re.split(self.custom_delimiter_input.text(), e) for e in text.split("\n")]
                     except:
                         pass
         return data_lines
@@ -126,8 +126,8 @@ class AddFileWindow(QDialog):
     def get_final_data(self):
         data = []
         delimiter = self.delimiters[self.delimiter_combo_box.currentIndex()][0]
-        data_lines = self.get_data()
-        if self.raw_text:
+        data_lines = self.get_data(sample=False)
+        if data_lines:
             headers = []
             if self.header_row_checkbox.isChecked():
                 headers = data_lines[0]
